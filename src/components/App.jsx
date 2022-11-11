@@ -1,24 +1,29 @@
-import { useState } from 'react';
 import React from 'react';
 import { Section } from 'components/Section/Section';
+import { useCounterFeedback } from 'Hooks/CounterFeedback'; // кастомный хук для подсчета отзывов
 
 export const App = () => {
-  const [goodMark, setGoodMark] = useState(0);
-  const [neutralMark, setNeutralMark] = useState(0);
-  const [badMark, setBadMark] = useState(0);
+  const [goodMark, setGoodMark] = useCounterFeedback(0);
+  const [neutralMark, setNeutralMark] = useCounterFeedback(0);
+  const [badMark, setBadMark] = useCounterFeedback(0);
+  // *Рабочий вариант без кастомного хука
+  //======================================
+  //   const countGoodFeedback = () => {
+  //     setGoodMark(state => state + 1);
+  //   };
 
-  const countGoodFeedback = () => {
-    setGoodMark(goodMark + 1);
-  };
-  const countBadFeedback = () => {
-    setBadMark(badMark + 1);
-  };
-  const countNeutralFeedback = () => {
-    setNeutralMark(neutralMark + 1);
-  };
+  //   const countBadFeedback = () => {
+  //     setBadMark(state => state + 1);
+  //   };
+
+  //   const countNeutralFeedback = () => {
+  //     setNeutralMark(state => state + 1);
+  //   };
+  //========================================
   const countTotalFeedback = ({ goodMark, neutralMark, badMark }) => {
     return goodMark + neutralMark + badMark;
   };
+
   const countPositiveFeedbackPercentage = ({
     goodMark,
     neutralMark,
@@ -30,9 +35,9 @@ export const App = () => {
   };
   return (
     <Section
-      good={countGoodFeedback}
-      neutral={countNeutralFeedback}
-      bad={countBadFeedback}
+      good={setGoodMark}
+      neutral={setNeutralMark}
+      bad={setBadMark}
       incrementGood={goodMark}
       incrementNeutral={neutralMark}
       incrementBad={badMark}
